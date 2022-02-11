@@ -3,4 +3,8 @@
 <PageTitle>Index</PageTitle>
 
 
-<FairPlayRides.Components.AzureMaps></FairPlayRides.Components.AzureMaps>
+@if (ShowMapsControl)
+{
+    <FairPlayRides.Components.AzureMaps GeoCoordinates="GeoCoordinates" 
+    AzureMapsConfiguration="this.AzureMapsConfiguration"></FairPlayRides.Components.AzureMaps>
+}

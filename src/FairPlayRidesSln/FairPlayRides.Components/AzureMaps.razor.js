@@ -2,9 +2,8 @@
 export let datasource;
 
 
-export function GetMap(coordinates) {
-    const clientId = 'REPLACE WITH YOUR AZURE MAPS CLIENT ID';
-    const subscriptionKey = 'REPLACE WITH YOUR AZURE MAPS SUBSCRIPTION KEY';
+export function GetMap(coordinates, clientId, subscriptionKey) {
+    debugger;
     //Initialize a map instance.
     map = new atlas.Map('mapWidget', {
         center: [coordinates.longitude, coordinates.latitude],

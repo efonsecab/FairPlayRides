@@ -13,6 +13,8 @@ namespace FairPlayRides.Components
     {
         [Parameter]
         public GeoCoordinates GeoCoordinates { get; set; }
+        [Parameter]
+        public AzureMapsConfiguration AzureMapsConfiguration { get; set; }
         [Inject]
         private IJSRuntime? JSRuntime { get; set; }
         private IJSObjectReference? module;
@@ -22,7 +24,8 @@ namespace FairPlayRides.Components
             {
                 module = await JSRuntime!.InvokeAsync<IJSObjectReference>("import",
                 $"./_content/FairPlayRides.Components/AzureMaps.razor.js");
-                await module.InvokeVoidAsync("GetMap", this.GeoCoordinates);
+                await module.InvokeVoidAsync("GetMap", this.GeoCoordinates,
+                    this.AzureMapsConfiguration.ClientId, this.AzureMapsConfiguration.SubscriptionKey);
             }
         }
     }

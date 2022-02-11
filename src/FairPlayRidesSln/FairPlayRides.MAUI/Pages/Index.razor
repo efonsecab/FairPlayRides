@@ -6,3 +6,12 @@
 {
     <FairPlayRides.Components.AzureMaps GeoCoordinates="@this.InitialGeoLocation"></FairPlayRides.Components.AzureMaps>
 }
+
+@foreach (var singlePathSegment in this.Path)
+{
+    <div class="row">
+        <div class="col">
+            @singlePathSegment
+        </div>
+    </div>
+}
