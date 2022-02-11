@@ -12,6 +12,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\..\FairPlayRides.Components\FairPlayRides.Components.csproj" />
     <ProjectReference Include="..\Shared\FairPlayRides.Blazor.Shared.csproj" />
   </ItemGroup>
 
