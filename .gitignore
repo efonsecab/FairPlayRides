@@ -349,3 +349,4 @@ MigrationBackup/
 # Ionide (cross platform F# VS Code tools) working folder
 .ionide/
 /src/FairPlayRidesSln/FairPlayRides.Blazor/Client/wwwroot/appsettings.Development.json
+/src/FairPlayRidesSln/FairPlayRides.MAUI/wwwroot/appsettings.Development.json
