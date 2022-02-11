@@ -1,10 +1,14 @@
 ﻿export let map;
 export let datasource;
+export let previousLongitude;
+export let previousLatitude;
+export let _controlObjectReference;
 
-
-export function GetMap(coordinates, clientId, subscriptionKey) {
-    debugger;
+export function GetMap(coordinates, clientId, subscriptionKey, controlObjectReference) {
+    _controlObjectReference = controlObjectReference;
     //Initialize a map instance.
+    previousLongitude = coordinates.longitude;
+    previousLatitude = coordinates.latitude;
     map = new atlas.Map('mapWidget', {
         center: [coordinates.longitude, coordinates.latitude],
         zoom: 14,
@@ -39,5 +43,40 @@ export function GetMap(coordinates, clientId, subscriptionKey) {
         //Create a data source and add it to the map.
         datasource = new atlas.source.DataSource();
         map.sources.add(datasource);
+
+        var symbolDataSource = new atlas.source.DataSource();
+        map.sources.add(symbolDataSource);
+        var point = new atlas.Shape(new atlas.data.Point([coordinates.longitude, coordinates.latitude]));
+        //Add the symbol to the data source.
+        symbolDataSource.add([point]);
+        map.layers.add(new atlas.layer.SymbolLayer(symbolDataSource, null));
     });
+
+    map.events.add('click', (e) =>
+    {
+        var longitude = e.position[0];
+        var latitude = e.position[1];
+        var dataSource = new atlas.source.DataSource();
+        map.sources.add(dataSource);
+        var point = new atlas.Shape(new atlas.data.Point([longitude, latitude]));
+        //Add the symbol to the data source.
+        dataSource.add([point]);
+        map.layers.add(new atlas.layer.SymbolLayer(dataSource, null));
+
+        //Create a line and add it to the data source.
+        dataSource.add(new atlas.data.LineString([[previousLongitude, previousLatitude], [longitude, latitude]]));
+
+        //Create a line layer to render the line to the map.
+        map.layers.add(new atlas.layer.LineLayer(dataSource, null, {
+            strokeColor: 'blue',
+            strokeWidth: 5
+        }));
+
+        previousLatitude = latitude;
+        previousLongitude = longitude;
+
+        _controlObjectReference.invokeMethodAsync('OnMapClicked', latitude, longitude);
+
+    });
+
 }
