@@ -63,4 +63,10 @@
 	  <ProjectReference Include="..\FairPlayRides.Components\FairPlayRides.Components.csproj" />
 	</ItemGroup>
 
+	<ItemGroup>
+	  <Content Update="wwwroot\appsettings.json">
+	    <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+	  </Content>
+	</ItemGroup>
+
 </Project>

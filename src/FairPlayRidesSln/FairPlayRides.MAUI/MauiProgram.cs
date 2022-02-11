@@ -2,6 +2,8 @@
 using FairPlayRides.MAUI.Data;
 using FairPlayRides.Blazor.Shared.GeoLocation;
 using FairPlayRides.MAUI.AgnosticImplementations;
+using Microsoft.Extensions.Configuration;
+using FairPlayRides.Components;
 
 namespace FairPlayRides.MAUI;
 
@@ -17,7 +19,13 @@ public static class MauiProgram
 			{
 				fonts.AddFont("OpenSans-Regular.ttf", "OpenSansRegular");
 			});
-
+		var appParentDirectory = Directory.GetParent(AppContext.BaseDirectory).Parent;
+		var appSettingsFilePath = Path.Combine(appParentDirectory.FullName, "wwwroot/appsettings.json");
+		builder.Configuration.AddJsonFile(appSettingsFilePath, optional:false);
+		AzureMapsConfiguration azureMapsConfiguration = builder.Configuration
+			.GetSection(nameof(AzureMapsConfiguration))
+			.Get<AzureMapsConfiguration>();
+		builder.Services.AddSingleton(azureMapsConfiguration);
 		builder.Services.AddBlazorWebView();
 		builder.Services.AddSingleton<IGeoLocationProvider, GeoLocationProvider>();
 		builder.Services.AddSingleton<WeatherForecastService>();

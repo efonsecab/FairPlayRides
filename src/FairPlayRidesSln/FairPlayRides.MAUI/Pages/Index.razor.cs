@@ -1,4 +1,5 @@
 ﻿using FairPlayRides.Blazor.Shared.GeoLocation;
+using FairPlayRides.Components;
 using Microsoft.AspNetCore.Components;
 using System;
 using System.Collections.Generic;
@@ -13,6 +14,8 @@ namespace FairPlayRides.MAUI.Pages
         private GeoCoordinates InitialGeoLocation { get; set; }
         [Inject]
         private IGeoLocationProvider GeoLocationProvider { get; set; }
+        [Inject]
+        private AzureMapsConfiguration AzureMapsConfiguration { get; set; }
         private bool ShowMapsControl { get; set; } = false;
         private System.Timers.Timer Timer;
         private List<string> Path { get; set; } = new List<string>();
