@@ -5,16 +5,8 @@
 
 @if (ShowMapsControl)
 {
-    <FairPlayRides.Components.AzureMaps GeoCoordinates="GeoCoordinates"
-                                    AzureMapsConfiguration="this.AzureMapsConfiguration"
-                                    OnNewCoordinatesReceived="OnNewCoordinatesReceived"></FairPlayRides.Components.AzureMaps>
-}
-
-@foreach (var singleGeoCoordinate in this.GeoCoordinatesList)
-{
-    <div class="row">
-        <div class="col">
-            @($"Latitude: {singleGeoCoordinate.Latitude}. Longitude: {singleGeoCoordinate.Longitude}")
-        </div>
-    </div>
+    <FairPlayRides.Components.RideMap
+    AzureMapsConfiguration="AzureMapsConfiguration"
+    GeoCoordinates="GeoCoordinates"
+    ></FairPlayRides.Components.RideMap>
 }

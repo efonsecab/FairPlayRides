@@ -4,13 +4,13 @@ VisualStudioVersion = 17.0.31611.283
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "FairPlayRides.MAUI", "FairPlayRides.MAUI\FairPlayRides.MAUI.csproj", "{59EB4F7B-DDC0-4D20-9E07-338617CE4E8C}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FairPlayRides.Blazor.Server", "FairPlayRides.Blazor\Server\FairPlayRides.Blazor.Server.csproj", "{9857DEE9-E980-42EF-9D37-66F8E034FB03}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "FairPlayRides.Blazor.Server", "FairPlayRides.Blazor\Server\FairPlayRides.Blazor.Server.csproj", "{9857DEE9-E980-42EF-9D37-66F8E034FB03}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FairPlayRides.Blazor.Client", "FairPlayRides.Blazor\Client\FairPlayRides.Blazor.Client.csproj", "{F01214D2-4F4F-41B8-B5ED-BA53C7AA3FCB}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "FairPlayRides.Blazor.Client", "FairPlayRides.Blazor\Client\FairPlayRides.Blazor.Client.csproj", "{F01214D2-4F4F-41B8-B5ED-BA53C7AA3FCB}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FairPlayRides.Blazor.Shared", "FairPlayRides.Blazor\Shared\FairPlayRides.Blazor.Shared.csproj", "{0209C4BB-28A9-4870-841F-504F734D05C8}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "FairPlayRides.Blazor.Shared", "FairPlayRides.Blazor\Shared\FairPlayRides.Blazor.Shared.csproj", "{0209C4BB-28A9-4870-841F-504F734D05C8}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FairPlayRides.Components", "FairPlayRides.Components\FairPlayRides.Components.csproj", "{D877C3DF-B6A9-4BB0-8A8D-9ADC872DFE5E}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "FairPlayRides.Components", "FairPlayRides.Components\FairPlayRides.Components.csproj", "{D877C3DF-B6A9-4BB0-8A8D-9ADC872DFE5E}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

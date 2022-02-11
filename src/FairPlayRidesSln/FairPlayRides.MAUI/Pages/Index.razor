@@ -4,17 +4,8 @@
 
 @if (ShowMapsControl)
 {
-    <FairPlayRides.Components.AzureMaps 
-    GeoCoordinates="@this.InitialGeoLocation"
-    AzureMapsConfiguration="@this.AzureMapsConfiguration"
-    ></FairPlayRides.Components.AzureMaps>
-}
-
-@foreach (var singlePathSegment in this.Path)
-{
-    <div class="row">
-        <div class="col">
-            @singlePathSegment
-        </div>
-    </div>
+    <FairPlayRides.Components.RideMap
+    AzureMapsConfiguration="AzureMapsConfiguration"
+    GeoCoordinates="InitialGeoLocation"
+    ></FairPlayRides.Components.RideMap>
 }

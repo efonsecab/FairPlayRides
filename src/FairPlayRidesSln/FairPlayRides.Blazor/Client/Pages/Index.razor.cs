@@ -15,7 +15,6 @@ namespace FairPlayRides.Blazor.Client.Pages
         private bool ShowMapsControl { get; set; }
         private DotNetObjectReference<Index> ComponentReference { get; set; }
         private GeoCoordinates GeoCoordinates { get; set; }
-        private List<GeoCoordinates> GeoCoordinatesList { get; set; }  = new List<GeoCoordinates>();
 
         protected override async Task OnAfterRenderAsync(bool firstRender)
         {
@@ -36,15 +35,9 @@ namespace FairPlayRides.Blazor.Client.Pages
                 Latitude = latitude,
                 Longitude = longitude
             };
-            this.GeoCoordinatesList.Add(this.GeoCoordinates);
             this.ShowMapsControl = true;
 
             StateHasChanged();
-        }
-
-        public void OnNewCoordinatesReceived(GeoCoordinates geoCoordinates)
-        {
-            this.GeoCoordinatesList.Add(geoCoordinates);
         }
 
         public void Dispose()
