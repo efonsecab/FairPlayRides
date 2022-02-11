@@ -4,6 +4,7 @@ using FairPlayRides.Blazor.Shared.GeoLocation;
 using FairPlayRides.MAUI.AgnosticImplementations;
 using Microsoft.Extensions.Configuration;
 using FairPlayRides.Components;
+using System.Reflection;
 
 namespace FairPlayRides.MAUI;
 
@@ -19,14 +20,21 @@ public static class MauiProgram
 			{
 				fonts.AddFont("OpenSans-Regular.ttf", "OpenSansRegular");
 			});
-		var appParentDirectory = Directory.GetParent(AppContext.BaseDirectory).Parent;
-		var appSettingsFilePath = Path.Combine(appParentDirectory.FullName, "wwwroot/appsettings.json");
-		builder.Configuration.AddJsonFile(appSettingsFilePath, optional:false);
-		AzureMapsConfiguration azureMapsConfiguration = builder.Configuration
-			.GetSection(nameof(AzureMapsConfiguration))
-			.Get<AzureMapsConfiguration>();
-		builder.Services.AddSingleton(azureMapsConfiguration);
-		builder.Services.AddBlazorWebView();
+
+		string appSettingsResourceName = string.Empty;
+		var assembly = IntrospectionExtensions.GetTypeInfo(typeof(MauiProgram)).Assembly;
+#if DEBUG
+		appSettingsResourceName = "FairPlayRides.MAUI.wwwroot.appsettings.Development.json";
+#else
+		appSettingsResourceName = "FairPlayRides.MAUI.wwwroot.appsettings.json";
+#endif
+		Stream stream = assembly.GetManifestResourceStream(appSettingsResourceName);
+		builder.Configuration.AddJsonStream(stream);
+        AzureMapsConfiguration azureMapsConfiguration = builder.Configuration
+            .GetSection(nameof(AzureMapsConfiguration))
+            .Get<AzureMapsConfiguration>();
+        builder.Services.AddSingleton(azureMapsConfiguration);
+        builder.Services.AddBlazorWebView();
 		builder.Services.AddSingleton<IGeoLocationProvider, GeoLocationProvider>();
 		builder.Services.AddSingleton<WeatherForecastService>();
 

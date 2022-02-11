@@ -57,16 +57,21 @@
 
 	<ItemGroup>
 		<Content Remove="Properties\launchSettings.json" />
+		<Content Remove="wwwroot\appsettings.Development.json" />
+		<Content Remove="wwwroot\appsettings.json" />
+	</ItemGroup>
+
+	<ItemGroup>
+	  <EmbeddedResource Include="wwwroot\appsettings.Development.json">
+	    <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+	  </EmbeddedResource>
+	  <EmbeddedResource Include="wwwroot\appsettings.json">
+	    <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+	  </EmbeddedResource>
 	</ItemGroup>
 
 	<ItemGroup>
 	  <ProjectReference Include="..\FairPlayRides.Components\FairPlayRides.Components.csproj" />
-	</ItemGroup>
-
-	<ItemGroup>
-	  <Content Update="wwwroot\appsettings.json">
-	    <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-	  </Content>
 	</ItemGroup>
 
 </Project>
