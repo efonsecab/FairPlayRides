@@ -11,13 +11,19 @@ namespace FairPlayRides.MAUI.AgnosticImplementations
     {
         public async Task<GeoCoordinates> GetCurrentPositionAsync()
         {
-            var currentGeoLocation = await
-                Microsoft.Maui.Essentials.Geolocation.GetLocationAsync();
-            return new GeoCoordinates 
+            var locationTaskCompletionSource = new TaskCompletionSource<Location>();
+
+            Device.BeginInvokeOnMainThread(async () =>
             {
-                Latitude = currentGeoLocation.Latitude,
-                Longitude = currentGeoLocation.Longitude
+                locationTaskCompletionSource.SetResult(await Geolocation.GetLocationAsync());
+            });
+            await locationTaskCompletionSource.Task.ConfigureAwait(false);
+            var geoCoorindates = new GeoCoordinates 
+            {
+                Latitude = locationTaskCompletionSource.Task.Result.Latitude,
+                Longitude = locationTaskCompletionSource.Task.Result.Latitude
             };
+            return geoCoorindates;
         }
     }
 }

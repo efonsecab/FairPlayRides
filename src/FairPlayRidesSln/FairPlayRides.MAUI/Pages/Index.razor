@@ -1,11 +1,11 @@
 ﻿@page "/"
 
 <h1>MAUI App with Azure Maps</h1>
+<CascadingValue Name="GeoCoordinatesList" Value="@GeoCoordinatesList">
+    @if (ShowMapsControl)
+    {
 
-@if (ShowMapsControl)
-{
-    <FairPlayRides.Components.RideMap
-    AzureMapsConfiguration="AzureMapsConfiguration"
-    GeoCoordinates="InitialGeoLocation"
-    ></FairPlayRides.Components.RideMap>
-}
+        <FairPlayRides.Components.RideMap AzureMapsConfiguration="AzureMapsConfiguration"
+                                      GeoCoordinates="InitialGeoLocation"></FairPlayRides.Components.RideMap>
+    }
+</CascadingValue>

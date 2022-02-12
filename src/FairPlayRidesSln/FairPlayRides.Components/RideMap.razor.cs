@@ -1,20 +1,20 @@
 ﻿using FairPlayRides.Blazor.Shared.GeoLocation;
 using Microsoft.AspNetCore.Components;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace FairPlayRides.Components
 {
     public partial class RideMap
     {
+        private System.Timers.Timer _timer;
+
         [Parameter]
         public AzureMapsConfiguration? AzureMapsConfiguration { get; set; }
         [Parameter]
         public GeoCoordinates GeoCoordinates { get; set; }
-        private List<GeoCoordinates> GeoCoordinatesList { get; set; } = new List<GeoCoordinates>();
+        [CascadingParameter(Name = "GeoCoordinatesList")]
+        public List<GeoCoordinates> GeoCoordinatesList { get; set; }
+        [Inject]
+        private IGeoLocationProvider GeoLocationProvider { get; set; }
 
         protected override void OnInitialized()
         {
@@ -26,5 +26,18 @@ namespace FairPlayRides.Components
             this.GeoCoordinatesList.Add(geoCoordinates);
         }
 
+        private void Start()
+        {
+            this._timer = new System.Timers.Timer();
+            _timer.Interval = TimeSpan.FromSeconds(10).TotalMilliseconds;
+            _timer.Elapsed += async (sender, e) => 
+            {
+                var geoCoordinates = 
+                await this.GeoLocationProvider.GetCurrentPositionAsync().ConfigureAwait(false);
+                this.GeoCoordinatesList.Add(geoCoordinates);
+                await InvokeAsync( ()=> StateHasChanged());
+            };
+            _timer.Start();
+        }
     }
 }

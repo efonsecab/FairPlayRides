@@ -17,20 +17,20 @@ namespace FairPlayRides.MAUI.Pages
         [Inject]
         private AzureMapsConfiguration AzureMapsConfiguration { get; set; }
         private bool ShowMapsControl { get; set; } = false;
-        private System.Timers.Timer Timer;
-        private List<string> Path { get; set; } = new List<string>();
+        private List<GeoCoordinates> GeoCoordinatesList { get; set; } = new List<GeoCoordinates>();
         protected override async Task OnInitializedAsync()
         {
-            this.InitialGeoLocation = await this.GeoLocationProvider.GetCurrentPositionAsync();
-            this.ShowMapsControl = true;
-            this.Timer = new System.Timers.Timer();
-            Timer.Interval = TimeSpan.FromSeconds(10).TotalMilliseconds;
-            this.Timer.Elapsed += async (sender, args) => 
+            var locationPermissionStatus = await
+            Permissions.RequestAsync<Microsoft.Maui.Essentials.Permissions.LocationWhenInUse>();
+            if (locationPermissionStatus != PermissionStatus.Granted)
             {
-                this.Path.Add(Random.Shared.Next(10000).ToString());
-                await InvokeAsync(() => StateHasChanged());
-            };
-            this.Timer.Start();
+                locationPermissionStatus = await
+                            Permissions.RequestAsync<Microsoft.Maui.Essentials.Permissions.LocationWhenInUse>();
+            }
+
+            this.InitialGeoLocation = await this.GeoLocationProvider
+                .GetCurrentPositionAsync();
+            this.ShowMapsControl = true;
         }
     }
 }

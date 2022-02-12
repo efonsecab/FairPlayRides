@@ -5,6 +5,7 @@ using FairPlayRides.MAUI.AgnosticImplementations;
 using Microsoft.Extensions.Configuration;
 using FairPlayRides.Components;
 using System.Reflection;
+using Microsoft.AspNetCore.Components.Web;
 
 namespace FairPlayRides.MAUI;
 
@@ -37,7 +38,16 @@ public static class MauiProgram
         builder.Services.AddBlazorWebView();
 		builder.Services.AddSingleton<IGeoLocationProvider, GeoLocationProvider>();
 		builder.Services.AddSingleton<WeatherForecastService>();
+		builder.Services.AddSingleton<IErrorBoundaryLogger, ErrorBoundaryLogger>();
 
 		return builder.Build();
 	}
+}
+
+public class ErrorBoundaryLogger : IErrorBoundaryLogger
+{
+    public ValueTask LogErrorAsync(Exception exception)
+    {
+		return ValueTask.CompletedTask;
+    }
 }
