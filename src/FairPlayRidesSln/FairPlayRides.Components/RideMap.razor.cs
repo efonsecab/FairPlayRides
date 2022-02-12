@@ -15,6 +15,7 @@ namespace FairPlayRides.Components
         public List<GeoCoordinates> GeoCoordinatesList { get; set; }
         [Inject]
         private IGeoLocationProvider GeoLocationProvider { get; set; }
+        private AzureMaps AzureMaps { get; set; }
 
         protected override void OnInitialized()
         {
@@ -37,6 +38,8 @@ namespace FairPlayRides.Components
                 if (!GeoCoordinatesList.Contains(geoCoordinates))
                 {
                     this.GeoCoordinatesList.Add(geoCoordinates);
+                    await this.AzureMaps.RenderLineFromPreviousCoordinates(geoCoordinates);
+                    await this.AzureMaps.UpdatePreviousCoordinates(geoCoordinates);
                 };
                 await InvokeAsync(() => StateHasChanged());
             };

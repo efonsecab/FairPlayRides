@@ -21,7 +21,7 @@ namespace FairPlayRides.MAUI.AgnosticImplementations
             var geoCoorindates = new GeoCoordinates 
             {
                 Latitude = locationTaskCompletionSource.Task.Result.Latitude,
-                Longitude = locationTaskCompletionSource.Task.Result.Latitude
+                Longitude = locationTaskCompletionSource.Task.Result.Longitude
             };
             return geoCoorindates;
         }

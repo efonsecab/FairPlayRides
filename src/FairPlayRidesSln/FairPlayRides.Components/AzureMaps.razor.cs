@@ -44,5 +44,16 @@ namespace FairPlayRides.Components
                 Longitude = longitude
             });
         }
+
+        public async Task RenderLineFromPreviousCoordinates(GeoCoordinates endGeoCoordinates)
+        {
+            await module!.InvokeVoidAsync("renderLineFromPreviousCoordinates",
+                endGeoCoordinates.Latitude, endGeoCoordinates.Longitude);
+        }
+
+        public async Task UpdatePreviousCoordinates(GeoCoordinates newCoordinates)
+        {
+            await module!.InvokeVoidAsync("updatePreviousCoordinates", newCoordinates.Latitude, newCoordinates.Longitude);
+        }
     }
 }

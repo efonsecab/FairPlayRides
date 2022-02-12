@@ -80,3 +80,30 @@ export function GetMap(coordinates, clientId, subscriptionKey, controlObjectRefe
     });
 
 }
+
+export function renderLineFromPreviousCoordinates(endLatitude, endLongitude) {
+    renderLine(previousLatitude, previousLongitude, endLatitude, endLongitude);
+}
+
+export function renderLine(startLatitude, startLongitude, endLatitude, endLongitude) {
+    var dataSource = new atlas.source.DataSource();
+    map.sources.add(dataSource);
+    //var point = new atlas.Shape(new atlas.data.Point([longitude, latitude]));
+    //Add the symbol to the data source.
+    //dataSource.add([point]);
+    //map.layers.add(new atlas.layer.SymbolLayer(dataSource, null));
+
+    //Create a line and add it to the data source.
+    dataSource.add(new atlas.data.LineString([[startLongitude, startLatitude], [endLongitude, endLatitude]]));
+
+    //Create a line layer to render the line to the map.
+    map.layers.add(new atlas.layer.LineLayer(dataSource, null, {
+        strokeColor: 'blue',
+        strokeWidth: 5
+    }));
+}
+export function updatePreviousCoordinates(newlatitude, newlongitude) {
+    previousLatitude = newlatitude;
+    previousLongitude = newlongitude;
+
+}
