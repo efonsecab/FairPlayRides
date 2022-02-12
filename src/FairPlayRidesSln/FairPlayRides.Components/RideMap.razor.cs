@@ -30,12 +30,15 @@ namespace FairPlayRides.Components
         {
             this._timer = new System.Timers.Timer();
             _timer.Interval = TimeSpan.FromSeconds(10).TotalMilliseconds;
-            _timer.Elapsed += async (sender, e) => 
+            _timer.Elapsed += async (sender, e) =>
             {
-                var geoCoordinates = 
+                var geoCoordinates =
                 await this.GeoLocationProvider.GetCurrentPositionAsync().ConfigureAwait(false);
-                this.GeoCoordinatesList.Add(geoCoordinates);
-                await InvokeAsync( ()=> StateHasChanged());
+                if (!GeoCoordinatesList.Contains(geoCoordinates))
+                {
+                    this.GeoCoordinatesList.Add(geoCoordinates);
+                };
+                await InvokeAsync(() => StateHasChanged());
             };
             _timer.Start();
         }

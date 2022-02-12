@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace FairPlayRides.Blazor.Shared.GeoLocation
 {
-    public class GeoCoordinates
+    public struct GeoCoordinates
     {
         public double Latitude { get; set; }
         public double Longitude { get; set; }
