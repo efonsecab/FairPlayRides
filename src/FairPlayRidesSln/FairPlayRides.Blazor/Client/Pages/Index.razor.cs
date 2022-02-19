@@ -11,10 +11,13 @@ namespace FairPlayRides.Blazor.Client.Pages
         private IJSRuntime JSRuntime { get; set; }
         [Inject]
         private AzureMapsConfiguration AzureMapsConfiguration { get; set; }
+        [Inject]
+        public IGeoLocationProvider GeoLocationProvider { get; set; }
         private IJSObjectReference? module;
         private bool ShowMapsControl { get; set; }
         private DotNetObjectReference<Index> ComponentReference { get; set; }
         private GeoCoordinates GeoCoordinates { get; set; }
+        private List<GeoCoordinates> GeoCoordinatesList { get; set; }=new List<GeoCoordinates>();
 
         protected override async Task OnAfterRenderAsync(bool firstRender)
         {
@@ -23,7 +26,16 @@ namespace FairPlayRides.Blazor.Client.Pages
             {
                 module = await JSRuntime!.InvokeAsync<IJSObjectReference>("import",
                 $"./Pages/Index.razor.js");
-                await module.InvokeVoidAsync("getCurrentGeoLocation", ComponentReference);
+                //await module.InvokeVoidAsync("getCurrentGeoLocation", ComponentReference);
+                var location  = await GeoLocationProvider.GetCurrentPositionAsync();
+                this.GeoCoordinates = new GeoCoordinates
+                {
+                    Latitude = (double)location.Latitude,
+                    Longitude = (double)location.Longitude
+                };
+                this.ShowMapsControl = true;
+
+                StateHasChanged();
             }
         }
 

@@ -2,11 +2,10 @@
 
 <PageTitle>Index</PageTitle>
 
-
 @if (ShowMapsControl)
 {
-    <FairPlayRides.Components.RideMap
-    AzureMapsConfiguration="AzureMapsConfiguration"
-    GeoCoordinates="GeoCoordinates"
-    ></FairPlayRides.Components.RideMap>
+    <CascadingValue Name="GeoCoordinatesList" Value="@GeoCoordinatesList">
+        <FairPlayRides.Components.RideMap AzureMapsConfiguration="AzureMapsConfiguration"
+                                      GeoCoordinates="GeoCoordinates"></FairPlayRides.Components.RideMap>
+    </CascadingValue>
 }
