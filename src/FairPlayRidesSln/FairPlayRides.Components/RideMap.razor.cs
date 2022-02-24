@@ -1,11 +1,13 @@
 ﻿using FairPlayRides.Blazor.Shared.GeoLocation;
 using Microsoft.AspNetCore.Components;
+using Microsoft.JSInterop;
 
 namespace FairPlayRides.Components
 {
     public partial class RideMap
     {
-        private System.Timers.Timer _timer;
+        private System.Timers.Timer CoordinatesTimer { get; set; }
+        private System.Timers.Timer ElapsedTimeTimer { get; set; }
 
         [Parameter]
         public AzureMapsConfiguration? AzureMapsConfiguration { get; set; }
@@ -15,6 +17,11 @@ namespace FairPlayRides.Components
         public List<GeoCoordinates> GeoCoordinatesList { get; set; }
         [Inject]
         private IGeoLocationProvider GeoLocationProvider { get; set; }
+        [Inject]
+        private IJSRuntime JSRuntime { get; set; }
+        private DateTimeOffset? TimeStarted { get; set; }
+        private DateTimeOffset? CurrentTime { get; set; }
+        private TimeSpan? TimeElapsed { get; set; }
         private AzureMaps AzureMaps { get; set; }
 
         protected override void OnInitialized()
@@ -27,23 +34,34 @@ namespace FairPlayRides.Components
             this.GeoCoordinatesList.Add(geoCoordinates);
         }
 
-        private void Start()
+        private async void Start()
         {
-            this._timer = new System.Timers.Timer();
-            _timer.Interval = TimeSpan.FromSeconds(10).TotalMilliseconds;
-            _timer.Elapsed += async (sender, e) =>
+            await this.JSRuntime.InvokeVoidAsync("alert", "Starting");
+            this.CoordinatesTimer = new System.Timers.Timer();
+            CoordinatesTimer.Interval = TimeSpan.FromSeconds(10).TotalMilliseconds;
+            CoordinatesTimer.Elapsed += async (sender, e) =>
             {
                 var geoCoordinates =
                 await this.GeoLocationProvider.GetCurrentPositionAsync().ConfigureAwait(false);
-                if (!GeoCoordinatesList.Contains(geoCoordinates))
+                //if (!GeoCoordinatesList.Contains(geoCoordinates))
                 {
                     this.GeoCoordinatesList.Add(geoCoordinates);
-                    await this.AzureMaps.RenderLineFromPreviousCoordinates(geoCoordinates);
-                    await this.AzureMaps.UpdatePreviousCoordinates(geoCoordinates);
+                    //await this.AzureMaps.RenderLineFromPreviousCoordinates(geoCoordinates);
+                    //await this.AzureMaps.UpdatePreviousCoordinates(geoCoordinates);
                 };
                 await InvokeAsync(() => StateHasChanged());
             };
-            _timer.Start();
+            this.ElapsedTimeTimer = new();
+            this.ElapsedTimeTimer.Interval = TimeSpan.FromSeconds(1).TotalMilliseconds;
+            this.ElapsedTimeTimer.Elapsed += async (sender, e) => 
+            {
+                CurrentTime = DateTimeOffset.UtcNow;
+                this.TimeElapsed = CurrentTime.Value.Subtract(this.TimeStarted.Value);
+                await InvokeAsync(() => StateHasChanged());
+            };
+            CoordinatesTimer.Start();
+            ElapsedTimeTimer.Start();
+            this.TimeStarted=DateTime.UtcNow;
         }
     }
 }

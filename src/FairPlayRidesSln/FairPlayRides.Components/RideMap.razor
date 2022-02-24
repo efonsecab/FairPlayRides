@@ -1,11 +1,23 @@
-﻿<button @onclick="Start">Start</button>
+﻿<button type="button" class="btn btn-primary" @onclick="Start">Start</button>
+@if (this.TimeStarted.HasValue && this.CurrentTime.HasValue && this.TimeElapsed.HasValue)
+{
+    <ul class="list-group">
+        <li class="list-group-item">
+            DateTime Started: @TimeStarted
+        </li>
+        <li class="list-group-item">
+            Current DateTime: @CurrentTime
+        </li>
+        <li class="list-group-item">
+            Elapsed: @TimeElapsed
+        </li>
+    </ul>
+}
 
-<AzureMaps 
-AzureMapsConfiguration="@AzureMapsConfiguration"
-GeoCoordinates="@GeoCoordinates"
-OnNewCoordinatesReceived="@OnNewCoordinatesReceived"
-@ref="AzureMaps"
-></AzureMaps>
+<AzureMaps AzureMapsConfiguration="@AzureMapsConfiguration"
+           GeoCoordinates="@GeoCoordinates"
+           OnNewCoordinatesReceived="@OnNewCoordinatesReceived"
+           @ref="AzureMaps"></AzureMaps>
 
 @foreach (var singleGeoCoordinate in this.GeoCoordinatesList)
 {
